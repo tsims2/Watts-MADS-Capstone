@@ -444,8 +444,7 @@ class CSReportGenerator:
         # Calculate performance metrics
         total_performance = comp_card['Average Performance'].dropna().loc[lambda x: x >= 0].sum()
 
-        if self.customer_share == "":
-            print(company)
+ 
         customer_share = float(self.customer_share)
         program = comp_card['Program'].iloc[0]
         if "D" in program and "RID" in program:
