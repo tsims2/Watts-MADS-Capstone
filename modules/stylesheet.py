@@ -24,30 +24,20 @@ QPushButton:pressed {
 
 /* Settle button: navy with yellow text */
 QPushButton[text="Settle"] {
-    background-color: #020244;  /* Navy */
-    color: #FFC907;  /* Yellow */
+    background-color: #020244;
+    color: #FFC907;
 }
 
-/* Connected Solutions button: remains orange */
+/* Connected Solutions button: orange */
 QPushButton[text="Connected Solutions"] {
     background-color: #FF5400;
     color: #FFFFFF;
 }
 
-/* Data Table and Data Visuals buttons: navy */
+/* Data Table and Data Visuals buttons */
 QPushButton[objectName="toggle_treeview_button"], QPushButton[objectName="toggle_data_viewer_button"] {
-    background-color: #020244;  /* Navy */
-    color: #FFFFFF;
-}
-
-QPushButton[objectName="toggle_treeview_button"]:checked, QPushButton[objectName="toggle_data_viewer_button"]:checked {
-    background-color: #020244;  /* Navy */
-    color: #FFFFFF;
-}
-
-/* Data view button stays green when clicked */
-QPushButton[objectName="toggle_data_viewer_button"]:checked {
-    background-color: #00C9A2;
+    background-color: #D3D3D3;
+    color: #333333;
 }
 
 QPushButton[objectName="toggle_treeview_button"]:checked, QPushButton[objectName="toggle_data_viewer_button"]:checked {
@@ -55,9 +45,15 @@ QPushButton[objectName="toggle_treeview_button"]:checked, QPushButton[objectName
     color: #FFFFFF;
 }
 
-/* Data view button stays green when clicked */
-QPushButton[objectName="toggle_data_viewer_button"]:checked {
+/* Event Summary and Geo Analysis buttons */
+QPushButton[objectName="event_summary_button"], QPushButton[objectName="geo_analysis_button"] {
+    background-color: #D3D3D3;
+    color: #333333;
+}
+
+QPushButton[objectName="event_summary_button"]:checked, QPushButton[objectName="geo_analysis_button"]:checked {
     background-color: #00C9A2;
+    color: #FFFFFF;
 }
 
 QCheckBox {
