@@ -185,15 +185,15 @@ class CSReportGenerator:
 
         page_width, page_height = letter
 
-        image_path = r"C:\Users\Tyler.Sims\OneDrive - CPower\Documents\CPower\ISONE\ISONEdb\Branding\CPower_Icon_Stacked_Full_Color.png"
-        background_image_path = "C:/Users/Tyler.Sims/OneDrive - CPower/Documents/CPower/ISONE/ISONEdb/Branding/New England Stock Image.jpg"
+        # image_path = Put your own logo here
+        # background_image_path = Put your own image here
 
         # Draw background image
-        with Image.open(background_image_path) as img:
-            img_width, img_height = img.size
-            img_width = img_width * 0.95
-            img_height = img_height * 0.95
-        c.drawImage(background_image_path, -450, 50, width=img_width, height=img_height, mask='auto')
+        #with Image.open(background_image_path) as img:
+        #    img_width, img_height = img.size
+        #    img_width = img_width * 0.95
+        #    img_height = img_height * 0.95
+        #c.drawImage(background_image_path, -450, 50, width=img_width, height=img_height, mask='auto')
 
         # Draw white box
         box_x, box_y, box_width, box_height = 0, 0, 612, 264
@@ -203,11 +203,11 @@ class CSReportGenerator:
         c.rect(box_x, box_y, box_width, box_height, fill=True)
 
         # Draw CPower logo
-        with Image.open(image_path) as img:
-            img_width, img_height = img.size
-            img_width = img_width * 0.08
-            img_height = img_height * 0.08
-        c.drawImage(image_path, page_width/2 - img_width/2, 60, width=img_width, height=img_height, mask='auto')
+        #with Image.open(image_path) as img:
+        #    img_width, img_height = img.size
+        #    img_width = img_width * 0.08
+        #    img_height = img_height * 0.08
+        #c.drawImage(image_path, page_width/2 - img_width/2, 60, width=img_width, height=img_height, mask='auto')
 
         reversed_program_tab_name_mapping = {
             "CLT": "Cape Light Compact Program - Targeted Dispatch",
@@ -1289,10 +1289,7 @@ class CSReportGenerator:
         else:
             pdf_filename = os.path.join(full_path, f"{self.customer} {self.asset_id} {sub_program} Event {self.event.strftime('%Y.%m.%d')}.pdf")
             c = canvas.Canvas(pdf_filename, pagesize = letter)
-        
-        # Use this x-coordinate when drawing the image.
-        c.drawImage("Data\Image Assets\CPower_Logo.jpg", 470, 740, width=100, height=20)  # adjust the values as necessary
-        
+
         # Add the text to the canvas
         textobject = c.beginText(35, 20)
         textobject.setFont("Libre Franklin", 10)
