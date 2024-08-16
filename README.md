@@ -39,8 +39,7 @@ This demo has been reduced in scoped and refined for the purpose of this capston
 
 1. **Clone the Repository**:
    ```
-   git clone [repository-url]
-   cd [repository-name]
+  git clone https://github.com/tsims2/Watts-MADS-Capstone.git
    ```
 
 2. **Set Up a Virtual Environment** (recommended):
@@ -58,7 +57,7 @@ This demo has been reduced in scoped and refined for the purpose of this capston
    - Update the font file paths in `modules_external.py` to match your system's font locations.
 
 5. **Run Experimental Data** (if applicable):
-   - Use the dummy data generator provided to get experimental data to play with the demo.
+   - Use the dummy data generator provided in 'Data' to get experimental data to play with the demo.
 
 ## Running the Application
 
