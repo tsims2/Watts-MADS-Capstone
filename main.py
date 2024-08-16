@@ -372,9 +372,11 @@ class Watts(QMainWindow):
         # region Connected Solutions
         self.season=default_year_cs
         self.event_summary_settle_cs = self.create_data_view_button("Event Summary", self.create_heatmap_settle_cs)
+        self.event_summary_settle_cs.setObjectName("event_summary_button")
         self.event_summary_settle_cs.setVisible(True)                
 
         self.geo_analysis_button_settle_cs = self.create_data_view_button("Geo Analysis", self.create_geo_analysis_settle_cs)
+        self.geo_analysis_button_settle_cs.setObjectName("geo_analysis_button")
         self.geo_analysis_button_settle_cs.setVisible(True)
         # endregion
         # endregion
@@ -1237,36 +1239,38 @@ class Watts(QMainWindow):
         for _, row in cs_df.iterrows():
             coordinates = row['Coordinates']
             if isinstance(coordinates, tuple) and len(coordinates) == 2:
-                try:
-                    lat, lon = map(float, coordinates)
-                    if not (math.isnan(lat) or math.isnan(lon)):
-                        actual, forecasted = self.get_performance(row['ACCPRG'], selected_event)
-                        if actual is not None and forecasted is not None:
-                            performance_percentage = (actual / forecasted) * 100 if forecasted != 0 else 0
-                            color = self.get_color_for_performance(performance_percentage)
-                            
-                            # Calculate the potential money on the table
-                            potential_money = max(forecasted - actual, 0)
-                            circle_size = 3 + (potential_money / max_potential_money) * 30 if max_potential_money > 0 else 3
-                            
-                            folium.CircleMarker(
-                                location=[lat, lon],
-                                radius=circle_size,
-                                popup=f"<strong>{row['Customer']} - {row['Customer Asset']}</strong><br>"
-                                    f"Actual: {actual:.2f} kW<br>"
-                                    f"Forecasted: {forecasted:.2f} kW<br>"
-                                    f"Performance: {performance_percentage:.2f}%<br>"
-                                    f"Potential Improvement: {potential_money:.2f} kW",
-                                tooltip=row['Asset ID'],
-                                color=color,
-                                fill=True,
-                                fillColor=color,
-                                fillOpacity=0.7
-                            ).add_to(m)
+                #try:
+                lat, lon = map(float, coordinates)
+                print((lat, lon))
+                if not (math.isnan(lat) or math.isnan(lon)):
+                    actual, forecasted = self.get_performance(row['ACCPRG'], selected_event)
+                    print(("actual, forecasted"),(actual, forecasted))
+                    if actual is not None and forecasted is not None:
+                        performance_percentage = (actual / forecasted) * 100 if forecasted != 0 else 0
+                        color = self.get_color_for_performance(performance_percentage)
+                        
+                        # Calculate the potential money on the table
+                        potential_money = max(forecasted - actual, 0)
+                        circle_size = 3 + (potential_money / max_potential_money) * 30 if max_potential_money > 0 else 3
+                        
+                        folium.CircleMarker(
+                            location=[lat, lon],
+                            radius=circle_size,
+                            popup=f"<strong>{row['Customer']} - {row['Customer Asset']}</strong><br>"
+                                f"Actual: {actual:.2f} kW<br>"
+                                f"Forecasted: {forecasted:.2f} kW<br>"
+                                f"Performance: {performance_percentage:.2f}%<br>"
+                                f"Potential Improvement: {potential_money:.2f} kW",
+                            tooltip=row['Asset ID'],
+                            color=color,
+                            fill=True,
+                            fillColor=color,
+                            fillOpacity=0.7
+                        ).add_to(m)
                     else:
                         self.receive_message(f"Invalid coordinates (NaN) for ACCPRG {row['ACCPRG']}")
-                except ValueError:
-                    self.receive_message(f"Invalid coordinates for ACCPRG {row['ACCPRG']}: {coordinates}")
+                #except ValueError:
+                #    self.receive_message(f"Invalid coordinates for ACCPRG {row['ACCPRG']}: {coordinates}")
             else:
                 self.receive_message(f"Missing or invalid coordinates for ACCPRG {row['ACCPRG']}")
 
@@ -1308,7 +1312,7 @@ class Watts(QMainWindow):
                 try:
                     forecasted = float(item.text(13))  # Forecasted kW in column 13
                     for column in range(self.treeview.columnCount()):
-                        if self.treeview.headerItem().text(column) == f"CPOWER {event}":
+                        if self.treeview.headerItem().text(column) == f"{event}":
                             actual = float(item.text(column))
                             return actual, forecasted
                 except ValueError:
@@ -1331,13 +1335,10 @@ class Watts(QMainWindow):
 
     def populate_event_selection_combo_geo(self):
         self.event_combo_geo.clear()
-        if self.daily_button.isChecked():
-            events = self.cs_daily_dispatch_events['Event Date'].drop_duplicates(subset=['Event Date', 'Start Time']).tolist()
-        else:  # targeted
-            events = self.cs_targeted_dispatch_events['Event Date'].drop_duplicates(subset=['Event Date', 'Start Time']).tolist()
+        events = self.get_event_list()
         
         for event in events:
-            self.event_combo_geo.addItem(event.strftime('%Y-%m-%d'))
+            self.event_combo_geo.addItem(event.split[2])
         
     # endregion
     # endregion
@@ -2247,7 +2248,7 @@ class Watts(QMainWindow):
 
         self.update_selected_count()
         self.resize_columns_to_fit()
-        
+
     def apply_super_filter(self, filter_text="Connected Solutions", partial=False):
         selected_utilities = [checkbox.text() for checkbox in self.utility_checkbox_widget.findChildren(QCheckBox) if checkbox.isChecked()]
         selected_program_types = [checkbox.text() for checkbox in self.program_type_checkbox_widget.findChildren(QCheckBox) if checkbox.isChecked()]
