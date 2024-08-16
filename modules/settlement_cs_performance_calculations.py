@@ -50,8 +50,7 @@ class CSPerformanceCalculator:
         else:
             self.asset_event_data = self.asset_event_data.iloc[:, 0]
         
-        print("self.asset_event_data", self.asset_event_data)
-
+ 
     def create_cs_excel(self):
         # Define the event load and the one hour preceding it
         self.event_load = self.get_event_load()
@@ -67,7 +66,6 @@ class CSPerformanceCalculator:
 
         # Calculate Performance
         self.performance_df = self.calculate_performance()
-        print(self.performance_df)
 
         # Create Excel workbook
         event_date = pd.to_datetime(self.event).date()
@@ -152,7 +150,6 @@ class CSPerformanceCalculator:
         try:
             wb.save(excel_path)
         except PermissionError:
-            print(f"Unable to save the file. It might be open in another program. Please close it and try again.")
             return None
 
         return total_performance
