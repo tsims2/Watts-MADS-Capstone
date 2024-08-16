@@ -39,7 +39,7 @@ This demo has been reduced in scoped and refined for the purpose of this capston
 
 1. **Clone the Repository**:
    ```
-  git clone https://github.com/tsims2/Watts-MADS-Capstone.git
+   git clone https://github.com/tsims2/Watts-MADS-Capstone.git
    ```
 
 2. **Set Up a Virtual Environment** (recommended):
